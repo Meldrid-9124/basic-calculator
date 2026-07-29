@@ -20,6 +20,21 @@ function divide (num1, num2) {
     return num1 / num2;
 }
 
+function modulus (num1, num2) {
+    if (num1 === Math.floor(num1) && num2 === Math.floor(num2))
+        return num1 % num2;
+    else 
+        return "Only integers allowed!";
+}
+
+function power (base, exponent) {
+    let result = 1;
+    for (let i = 1; i < exponent; i++)
+        result *= base;
+    return result;
+}
+
+
 // operation handler
 function operate(operator, num1, num2) {
     if (operator === "+")
@@ -31,6 +46,6 @@ function operate(operator, num1, num2) {
         divide (num1, num2);
     else if (operator === "*")
         multiply (num1, num2);
-    
+
 }
 
