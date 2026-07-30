@@ -47,3 +47,34 @@ function operate(operator, num1, num2) {
     else if (operator === "*")
         multiply (num1, num2);
 }
+
+// all the buttons and their symbols
+const symbols = {
+    "add": "+",
+    "divide": "÷",
+    "subtract": "-",
+    "clear": "AC",
+    "nine": "9",
+    "power": "^",
+    "multiply": "×",
+    "modulus": "%",
+    "five": "5",
+    "six": "6",
+    "seven": "7",
+    "eight": "8",
+    "one": "1",
+    "two": "2",
+    "three": "3",
+    "four": "4",
+    "zero": "0",
+    "period": ".",
+    "sign-change": "+/-",
+    "evaluate": "="
+};
+const buttonList = Array.from(document.getElementById("buttons-section").querySelectorAll("button"));
+console.log(buttonList);
+// assign the symbols to buttons
+for (button of buttonList) {
+    const id = button.id;
+    button.textContent = symbols[id];
+}

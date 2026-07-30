@@ -21,6 +21,7 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 5%;
+    background-color: #2f3335;
 }
 
 #display {
@@ -28,6 +29,7 @@ body {
     width: 92%;
     height: 13%;
     margin: 10px;
+    background-color: #222425;
 }
 
 #buttons-section {
@@ -41,4 +43,6 @@ body {
     flex: 0 0 calc(100% / 4);
     border: 2px solid rgb(0, 119, 255);
     border-radius: 8px;
+    background-color: #373c3e;
+    font-size: 2rem;
 }
