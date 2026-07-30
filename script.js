@@ -1,6 +1,6 @@
 // operator and number states
-let num1;
-let num2;
+let num1 = 0;
+let num2 = 0;
 let operator;
 
 // basic math functions
@@ -34,6 +34,9 @@ function power(base, exponent) {
     return result;
 }
 
+function changeSign(number) {
+    return number * -1;
+}
 
 // operation handler
 function operate(operator, num1, num2) {
@@ -77,9 +80,17 @@ const symbols = {
 };
 const buttonList = Array.from(document.getElementById("buttons-section").querySelectorAll("button"));
 // assign the symbols to buttons
-for (button of buttonList) {
+for (const button of buttonList) {
     const id = button.id;
     button.textContent = symbols[id];
 }
 
 // event listeners for the numbers
+const numberButtons = Array.from(document.querySelectorAll(".number"));
+console.log(numberButtons);
+for (const numberButton of numberButtons) {
+    numberButton.addEventListener("click", () => {
+    console.log("ID test: ", numberButton.id)
+    console.log("Test: ", symbols[numberButton.id])
+    })
+}
