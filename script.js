@@ -47,8 +47,3 @@ function operate(operator, num1, num2) {
     else if (operator === "*")
         multiply (num1, num2);
 }
-
-
-
-// adjust the width of the buttons
-console.log(document.querySelector("buttons-section"))
