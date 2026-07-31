@@ -43,19 +43,21 @@ function changeSign(number) {
 
 // operation handler
 function operate(operator, num1, num2) {
+    let result;
     if (operator === "+")
-        add(num1, num2);
+        result = add(num1, num2);
     else if (operator === "-")
-        subtract(num1, num2);
+        result = subtract(num1, num2);
     // i will use / instead of divide symbol here
-    else if (operator === "/")
-        divide(num1, num2);
-    else if (operator === "*")
-        multiply(num1, num2);
+    else if (operator === "÷")
+        result = divide(num1, num2);
+    else if (operator === "×")
+        result = multiply(num1, num2);
     else if (operator === "%")
-        modulus(num1, num2);
+        result = modulus(num1, num2);
     else if (operator === "^")
-        power(num1, num2);
+        result = power(num1, num2);
+    return result;
 }
 
 // get input and show on display
@@ -130,11 +132,21 @@ function implementButtons() {
     })
     // implement event listeners for the math operators
     const mathOperatorsList = document.querySelectorAll(".math-operator");
-    console.log(mathOperatorsList);
     for (let mathOperator of mathOperatorsList) {
         mathOperator.addEventListener('click', () => {
-
+            // update operator var
+            operator = symbols[mathOperator.id];
         })
     }
+    // lastly, for evaluate button
+    const evalBtn = document.querySelector("#evaluate");
+    console.log(evalBtn);
+    // this button will perform the operation
+    evalBtn.addEventListener('click', () => {
+        if (operator !== "") {
+            const result = operate(operator, num1, num2);
+            display.textContent = result;
+        }
+    })
 }
 implementButtons();
