@@ -58,6 +58,27 @@ function operate(operator, num1, num2) {
         power(num1, num2);
 }
 
+// get input and show on display
+function inputNumber(numberButton, symbols) {
+    const display = document.querySelector("#display");
+    // initial check for display
+    if (display.textContent === "0")
+        display.textContent = "";
+    // if operator is undefined, update and display num1
+    if (operator === "") {
+        if (num1 === "0")
+            num1 = "";
+        num1 += symbols[numberButton.id];
+        display.textContent = num1;
+    }
+    // else update and display num2
+    else {
+        if (num2 === "0")
+            num2 = "";
+        num2 += symbols[numberButton.id];
+        display.textContent = num2;    // update the display
+    }
+}
 
 
 // assigns labels and event listeners to buttons
@@ -95,18 +116,7 @@ function implementButtons() {
     const numberButtons = Array.from(document.querySelectorAll(".number"));
     for (const numberButton of numberButtons) {
         numberButton.addEventListener("click", () => {
-            const display = document.querySelector("#display");
-            // initial check
-            if (display.textContent === "0")
-                display.textContent = "";
-            // if operator is undefined, update num1
-            if (operator === undefined)
-                num1 = symbols[numberButton.id];
-            // else num2
-            else
-                num2 = symbols[numberButton.id];
-            display.textContent += symbols[numberButton.id];
-            console.log("Test num1: ", num1, "\nTest num2: ", num2)
+            inputNumber(numberButton, symbols);
         })
     }
     // event listener for clear 
@@ -123,7 +133,7 @@ function implementButtons() {
     console.log(mathOperatorsList);
     for (let mathOperator of mathOperatorsList) {
         mathOperator.addEventListener('click', () => {
-            
+
         })
     }
 }
