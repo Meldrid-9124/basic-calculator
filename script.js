@@ -1,7 +1,9 @@
-// operator and number states
+// operator and number global vars
 let num1 = 0;
 let num2 = 0;
 let operator;
+
+const display = document.querySelector("#display");
 
 // basic math functions
 function add(num1, num2) {
@@ -38,6 +40,7 @@ function changeSign(number) {
     return number * -1;
 }
 
+
 // operation handler
 function operate(operator, num1, num2) {
     if (operator === "+")
@@ -55,42 +58,56 @@ function operate(operator, num1, num2) {
         power(num1, num2);
 }
 
-// all the buttons and their symbols
-const symbols = {
-    "zero": "0",
-    "one": "1",
-    "two": "2",
-    "three": "3",
-    "four": "4",
-    "five": "5",
-    "six": "6",
-    "seven": "7",
-    "eight": "8",
-    "nine": "9",
-    "add": "+",
-    "divide": "÷",
-    "subtract": "-",
-    "clear": "AC",
-    "power": "^",
-    "multiply": "×",
-    "modulus": "%",
-    "period": ".",
-    "sign-change": "+/-",
-    "evaluate": "="
-};
-const buttonList = Array.from(document.getElementById("buttons-section").querySelectorAll("button"));
-// assign the symbols to buttons
-for (const button of buttonList) {
-    const id = button.id;
-    button.textContent = symbols[id];
-}
 
-// event listeners for the numbers
-const numberButtons = Array.from(document.querySelectorAll(".number"));
-console.log(numberButtons);
-for (const numberButton of numberButtons) {
-    numberButton.addEventListener("click", () => {
-    console.log("ID test: ", numberButton.id)
-    console.log("Test: ", symbols[numberButton.id])
+
+// assigns labels and event listeners to buttons
+function implementButtons() {
+    // all the buttons and their symbols
+    const symbols = {
+        "zero": "0",
+        "one": "1",
+        "two": "2",
+        "three": "3",
+        "four": "4",
+        "five": "5",
+        "six": "6",
+        "seven": "7",
+        "eight": "8",
+        "nine": "9",
+        "add": "+",
+        "divide": "÷",
+        "subtract": "-",
+        "clear": "AC",
+        "power": "^",
+        "multiply": "×",
+        "modulus": "%",
+        "period": ".",
+        "sign-change": "+/-",
+        "evaluate": "="
+    };
+    const buttonList = Array.from(document.getElementById("buttons-section").querySelectorAll("button"));
+    // assign the symbols to buttons
+    for (const button of buttonList) {
+        const id = button.id;
+        button.textContent = symbols[id];
+    }
+    // event listeners for the numbers
+    const numberButtons = Array.from(document.querySelectorAll(".number"));
+    for (const numberButton of numberButtons) {
+        numberButton.addEventListener("click", () => {
+            const display = document.querySelector("#display");
+            display.textContent += symbols[numberButton.id];
+        })
+    }
+    // event listener for clear 
+    const clearIndex = buttonList.findIndex((element) => element.id === "clear");
+    buttonList[clearIndex].addEventListener('click', () => {
+        // reset display and vars
+        display.textContent = "";
+        num1 = 0;
+        num2 = 0;
+        operator = null;
     })
+    
 }
+implementButtons();

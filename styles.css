@@ -30,6 +30,10 @@ body {
     height: 13%;
     margin: 10px;
     background-color: #222425;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    font-size: 3rem;
 }
 
 #buttons-section {
