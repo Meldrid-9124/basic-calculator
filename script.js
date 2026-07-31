@@ -1,7 +1,7 @@
 // operator and number global vars
-let num1 = 0;
-let num2 = 0;
-let operator;
+let num1 = "0";
+let num2 = "0";
+let operator = "";
 
 const display = document.querySelector("#display");
 
@@ -96,18 +96,35 @@ function implementButtons() {
     for (const numberButton of numberButtons) {
         numberButton.addEventListener("click", () => {
             const display = document.querySelector("#display");
+            // initial check
+            if (display.textContent === "0")
+                display.textContent = "";
+            // if operator is undefined, update num1
+            if (operator === undefined)
+                num1 = symbols[numberButton.id];
+            // else num2
+            else
+                num2 = symbols[numberButton.id];
             display.textContent += symbols[numberButton.id];
+            console.log("Test num1: ", num1, "\nTest num2: ", num2)
         })
     }
     // event listener for clear 
     const clearIndex = buttonList.findIndex((element) => element.id === "clear");
     buttonList[clearIndex].addEventListener('click', () => {
         // reset display and vars
-        display.textContent = "";
-        num1 = 0;
-        num2 = 0;
+        display.textContent = "0";
+        num1 = "0";
+        num2 = "0";
         operator = null;
     })
-    
+    // implement event listeners for the math operators
+    const mathOperatorsList = document.querySelectorAll(".math-operator");
+    console.log(mathOperatorsList);
+    for (let mathOperator of mathOperatorsList) {
+        mathOperator.addEventListener('click', () => {
+            
+        })
+    }
 }
 implementButtons();
