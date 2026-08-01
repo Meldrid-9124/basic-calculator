@@ -2,12 +2,15 @@
 let num1 = "0";
 let num2 = "0";
 let operator = "";
+// false corresponds to num1 and true corresponds to num2
+let selectedNum = false;
+let globalResult = "";
 
 const display = document.querySelector("#display");
 
 // basic math functions
 function add(num1, num2) {
-    return num1 + num2;
+    return Number(num1) + Number(num2);
 }
 
 function subtract(num1, num2) {
@@ -23,21 +26,24 @@ function divide(num1, num2) {
 }
 
 function modulus(num1, num2) {
-    if (num1 === Math.floor(num1) && num2 === Math.floor(num2))
-        return num1 % num2;
+    let number1 = Number(num1);
+    let number2 = Number(num2);
+    if (number1 === Math.floor(number1) && number2 === Math.floor(number2))
+        return number1 % number2;
     else
         return "Only integers allowed!";
 }
 
 function power(base, exponent) {
     let result = 1;
-    for (let i = 1; i < exponent; i++)
+    console.log("base: ", base);
+    console.log("Exponent: ", exponent);
+    for (let i = 0; i < exponent; i++) {
+        console.log("Result in loop: ", result);
         result *= base;
+    }
+    console.log("Result of power: ", result);
     return result;
-}
-
-function changeSign(number) {
-    return number * -1;
 }
 
 
@@ -66,20 +72,30 @@ function inputNumber(numberButton, symbols) {
     // initial check for display
     if (display.textContent === "0")
         display.textContent = "";
-    // if operator is undefined, update and display num1
-    if (operator === "") {
+    // if operator is not selected and there is no result, update num1
+    if (operator === "" && globalResult === "") {
         if (num1 === "0")
             num1 = "";
         num1 += symbols[numberButton.id];
         display.textContent = num1;
     }
-    // else update and display num2
-    else {
+    // if operand is not selected and there is a result, update num2
+    else if (operator === "" && result !== "") {
+        num1 = globalResult;
         if (num2 === "0")
             num2 = "";
         num2 += symbols[numberButton.id];
-        display.textContent = num2;    // update the display
+        display.textContent = num2;
+
     }
+    // if operator is selected and there is no result, update num2
+    else if (operator !== "" && globalResult === "") {
+        if (num2 === "0")
+            num2 = "";
+        num2 += symbols[numberButton.id];
+        display.textContent = num2;
+    }
+
 }
 
 
@@ -119,6 +135,8 @@ function implementButtons() {
     for (const numberButton of numberButtons) {
         numberButton.addEventListener("click", () => {
             inputNumber(numberButton, symbols);
+            console.log("num1: ", num1, "\nnum2: ", num2);
+            console.log("operator: ", operator);
         })
     }
     // event listener for clear 
@@ -128,7 +146,8 @@ function implementButtons() {
         display.textContent = "0";
         num1 = "0";
         num2 = "0";
-        operator = null;
+        operator = "";
+        globalResult = "";
     })
     // implement event listeners for the math operators
     const mathOperatorsList = document.querySelectorAll(".math-operator");
@@ -136,16 +155,21 @@ function implementButtons() {
         mathOperator.addEventListener('click', () => {
             // update operator var
             operator = symbols[mathOperator.id];
+            console.log("Operator: ", operator);
         })
     }
+    // change sign operator
+    const signChangeBtn = document.querySelector("#sign-change");
+    signChangeBtn.addEventListener('click', () => {
+
+    })
     // lastly, for evaluate button
     const evalBtn = document.querySelector("#evaluate");
-    console.log(evalBtn);
     // this button will perform the operation
     evalBtn.addEventListener('click', () => {
         if (operator !== "") {
-            const result = operate(operator, num1, num2);
-            display.textContent = result;
+            globalResult = operate(operator, num1, num2);
+            display.textContent = globalResult;
         }
     })
 }
