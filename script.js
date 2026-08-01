@@ -2,9 +2,9 @@
 let num1 = "0";
 let num2 = "0";
 let operator = "";
-// false corresponds to num1 and true corresponds to num2
-let selectedNum = false;
 let globalResult = "";
+// false means num1 is selected; true means num2 is selected
+let selectedNum = false;
 
 const display = document.querySelector("#display");
 
@@ -70,32 +70,31 @@ function operate(operator, num1, num2) {
 function inputNumber(numberButton, symbols) {
     const display = document.querySelector("#display");
     // initial check for display
-    if (display.textContent === "0")
+    if (display.textContent == 0)
         display.textContent = "";
-    // if operator is not selected and there is no result, update num1
-    if (operator === "" && globalResult === "") {
-        if (num1 === "0")
+    const hasOperator = operator !== "";
+    const hasResult = globalResult !== "";
+    // if operator is not selected and there is no result, select num1
+    if (!hasOperator && !globalResult)
+        selectedNum = false;
+    // for num2 => !operator-selected  && result || operator-selected && !result 
+    // use XOR operation
+    else if (hasOperator !== hasResult)
+        selectedNum = true;
+    if (!selectedNum) {
+        if (num1 == 0)
             num1 = "";
         num1 += symbols[numberButton.id];
         display.textContent = num1;
     }
-    // if operand is not selected and there is a result, update num2
-    else if (operator === "" && result !== "") {
-        num1 = globalResult;
-        if (num2 === "0")
-            num2 = "";
-        num2 += symbols[numberButton.id];
-        display.textContent = num2;
-
-    }
-    // if operator is selected and there is no result, update num2
-    else if (operator !== "" && globalResult === "") {
+    else {
+        if (hasResult)
+            num1 = globalResult;
         if (num2 === "0")
             num2 = "";
         num2 += symbols[numberButton.id];
         display.textContent = num2;
     }
-
 }
 
 
@@ -161,7 +160,15 @@ function implementButtons() {
     // change sign operator
     const signChangeBtn = document.querySelector("#sign-change");
     signChangeBtn.addEventListener('click', () => {
-
+        if (!selectedNum) {
+            num1 = num1 * -1;
+            display.textContent = num1;
+        }
+        else {
+            num2 = num2 * -1;
+            display.textContent = num2;
+        }
+        operator = "";
     })
     // lastly, for evaluate button
     const evalBtn = document.querySelector("#evaluate");
