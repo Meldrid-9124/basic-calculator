@@ -101,6 +101,8 @@ function inputNumber(numberButton, symbols) {
         previousOperator.style.backgroundColor = "#373c3e"
         display.textContent = num2;
     }
+    // scrolling the display to account for larger numbers
+    display.scrollLeft = display.scrollWidth;
 }
 
 
@@ -153,7 +155,8 @@ function implementButtons() {
         num2 = "0";
         operator = "";
         globalResult = "";
-        previousOperator.style.backgroundColor = "#373c3e";
+        if (previousOperator)
+            previousOperator.style.backgroundColor = "#373c3e";
         previousOperator = "";
     })
     // implement event listeners for the math operators
@@ -196,6 +199,11 @@ function implementButtons() {
             display.textContent = globalResult;
             console.log("Displayed result: ", globalResult)
         }
+    })
+    // event listener for the period button
+    const periodBtn = document.querySelector("#period");
+    periodBtn.addEventListener('click', () => {
+        display.textContent += symbols[periodBtn.id];
     })
 }
 implementButtons();

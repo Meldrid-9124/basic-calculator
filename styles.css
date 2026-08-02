@@ -34,6 +34,15 @@ body {
     align-items: flex-end;
     justify-content: flex-end;
     font-size: 3rem;
+    /* handling numbers with greater digits than 10*/
+    white-space: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+/* hiding the scrollbar for Chrome, Safari, and Edge */
+.calculator-display::-webkit-scrollbar {
+    display: none;
 }
 
 #buttons-section {
