@@ -39,11 +39,7 @@ function modulus(num1, num2) {
 }
 
 function power(base, exponent) {
-    let result = 1;
-    for (let i = 0; i < exponent; i++) {
-        result *= base;
-    }
-    return result;
+    return Number(base) ** Number(exponent);
 }
 
 
@@ -180,7 +176,10 @@ function implementButtons() {
             num2 = num2 * -1;
             display.textContent = num2;
         }
-        operator = "";
+        if (previousOperator !== "")
+            operator = symbols[previousOperator.id];
+        else
+            operator = "";
     })
     // lastly, for evaluate button
     const evalBtn = document.querySelector("#evaluate");
