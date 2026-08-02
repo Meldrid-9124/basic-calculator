@@ -85,7 +85,7 @@ function inputNumber(numberButton, symbols) {
     else if (hasOperator !== hasResult)
         selectedNum = true;
     if (!selectedNum) {
-        if (num1 == 0)
+        if (num1 == 0 && symbols[numberButton.id] !== ".")
             num1 = "";
         num1 += symbols[numberButton.id];
         display.textContent = num1;
@@ -203,7 +203,8 @@ function implementButtons() {
     // event listener for the period button
     const periodBtn = document.querySelector("#period");
     periodBtn.addEventListener('click', () => {
-        display.textContent += symbols[periodBtn.id];
+        // gonna have to use the number input logic here
+        inputNumber(periodBtn, symbols);
     })
 }
 implementButtons();
