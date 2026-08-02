@@ -5,6 +5,8 @@ let operator = "";
 let globalResult = "";
 // false means num1 is selected; true means num2 is selected
 let selectedNum = false;
+// this var will keep track of previous operator to reset its color
+let previousOperator = "";
 
 const display = document.querySelector("#display");
 
@@ -54,7 +56,6 @@ function operate(operator, num1, num2) {
         result = add(num1, num2);
     else if (operator === "-")
         result = subtract(num1, num2);
-    // i will use / instead of divide symbol here
     else if (operator === "÷")
         result = divide(num1, num2);
     else if (operator === "×")
@@ -93,6 +94,7 @@ function inputNumber(numberButton, symbols) {
         if (num2 === "0")
             num2 = "";
         num2 += symbols[numberButton.id];
+        previousOperator.style.backgroundColor = "#373c3e"
         display.textContent = num2;
     }
 }
@@ -147,6 +149,8 @@ function implementButtons() {
         num2 = "0";
         operator = "";
         globalResult = "";
+        previousOperator.style.backgroundColor = "#373c3e";
+        previousOperator = "";
     })
     // implement event listeners for the math operators
     const mathOperatorsList = document.querySelectorAll(".math-operator");
@@ -154,7 +158,8 @@ function implementButtons() {
         mathOperator.addEventListener('click', () => {
             // update operator var
             operator = symbols[mathOperator.id];
-            console.log("Operator: ", operator);
+            // highlight the operator button
+            highlightOperator(mathOperator);
         })
     }
     // change sign operator
@@ -181,3 +186,20 @@ function implementButtons() {
     })
 }
 implementButtons();
+
+function highlightOperator(mathOperator) {
+    // reset previous operator's color and highlight new one
+    if (previousOperator !== "") {
+        // reset the previous and track the current operator
+        previousOperator.style.backgroundColor = "#373c3e";
+        previousOperator = mathOperator;
+        console.log("Worked in case of if! previous operator: ", previousOperator);
+    }
+    // if no previous operator currently, track it
+    else {
+        previousOperator = mathOperator;
+        console.log("Else condition reached. previous operator: ", previousOperator);
+    }
+    mathOperator.style.backgroundColor = "#00BB00"
+}
+
