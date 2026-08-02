@@ -26,7 +26,7 @@ function multiply(num1, num2) {
 function divide(num1, num2) {
     if (num2 == 0)
         return "Undefined"
-    return (num1 / num2).toFixed(9);
+    return num1 / num2;
 }
 
 function modulus(num1, num2) {
@@ -58,6 +58,9 @@ function operate(operator, num1, num2) {
         result = modulus(num1, num2);
     else if (operator === "^")
         result = power(num1, num2);
+    // in case of floats
+    if (Math.floor(result) != result)
+        result = result.toFixed("5");
     return result;
 }
 
@@ -87,7 +90,7 @@ function inputNumber(numberButton, symbols) {
             num1 = globalResult;
             num2 = "0";
         }
-        if (num2 === "0")
+        if (num2 == "0")
             num2 = "";
         num2 += symbols[numberButton.id];
         previousOperator.style.backgroundColor = "#373c3e"
@@ -95,8 +98,20 @@ function inputNumber(numberButton, symbols) {
     }
     // scrolling the display to account for larger numbers
     display.scrollLeft = display.scrollWidth;
+    // enable or disable period button
+    togglePeriodBtn();
 }
 
+
+// toggles the period button
+function togglePeriodBtn() {
+    const periodBtn = document.querySelector("#period");
+    if (!selectedNum && num1.includes(".") || selectedNum && num2.includes(".")) {
+        periodBtn.disabled = true;
+    }
+    else
+        periodBtn.disabled = false;
+}
 
 // assigns labels and event listeners to buttons
 function implementButtons() {
@@ -148,6 +163,9 @@ function implementButtons() {
         if (previousOperator)
             previousOperator.style.backgroundColor = "#373c3e";
         previousOperator = "";
+        // enable period button
+        const periodBtn = document.querySelector("#period");
+        periodBtn.disabled = false;
     })
     // implement event listeners for the math operators
     const mathOperatorsList = document.querySelectorAll(".math-operator");
@@ -195,15 +213,32 @@ function implementButtons() {
     periodBtn.addEventListener('click', () => {
         // gonna have to use the number input logic here
         inputNumber(periodBtn, symbols);
+        periodBtn.disabled = true;
     })
     // backspace key
     document.addEventListener('keydown', (event) => {
         const displayText = display.textContent;
         if (event.key === 'Backspace' && displayText != "0") {
-            display.textContent = displayText.slice(0, -1);
+            // for num1
+            if (!selectedNum) {
+                if (num1.length > 0)
+                    num1 = num1.slice(0, -1);
+                else
+                    num1 = "0";
+                display.textContent = num1;
+            }
+            else {
+                if (num2.length > 0)
+                    num2 = num2.slice(0, -1);
+                else
+                    num2 = "0";
+                display.textContent = num2;
+            }
             if (display.textContent.length == 0)
                 display.textContent = "0";
         }
+        // enable or disable period button
+        togglePeriodBtn();
     })
 }
 implementButtons();
@@ -220,4 +255,3 @@ function highlightOperator(mathOperator) {
         previousOperator = mathOperator;
     mathOperator.style.backgroundColor = "#00BB00"
 }
-
