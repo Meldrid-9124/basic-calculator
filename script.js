@@ -24,7 +24,9 @@ function multiply(num1, num2) {
 }
 
 function divide(num1, num2) {
-    return num1 / num2;
+    if (num2 == 0)
+        return "Undefined"
+    return (num1 / num2).toFixed(9);
 }
 
 function modulus(num1, num2) {
@@ -89,8 +91,10 @@ function inputNumber(numberButton, symbols) {
         display.textContent = num1;
     }
     else {
-        if (hasResult)
+        if (hasResult) {
             num1 = globalResult;
+            num2 = "0";
+        }
         if (num2 === "0")
             num2 = "";
         num2 += symbols[numberButton.id];
@@ -156,10 +160,18 @@ function implementButtons() {
     const mathOperatorsList = document.querySelectorAll(".math-operator");
     for (let mathOperator of mathOperatorsList) {
         mathOperator.addEventListener('click', () => {
+            // first evaluate the current operation if it exists
+            if (num1 && num2 && operator) {
+                num1 = operate(operator, num1, num2);
+                num2 = "";
+                display.textContent = num1;
+            }
             // update operator var
             operator = symbols[mathOperator.id];
             // highlight the operator button
             highlightOperator(mathOperator);
+            console.log("num1: ", num1, "\nnum2: ", num2);
+            console.log("operator: ", operator);
         })
     }
     // change sign operator
@@ -182,6 +194,7 @@ function implementButtons() {
         if (operator !== "") {
             globalResult = operate(operator, num1, num2);
             display.textContent = globalResult;
+            console.log("Displayed result: ", globalResult)
         }
     })
 }
@@ -193,13 +206,10 @@ function highlightOperator(mathOperator) {
         // reset the previous and track the current operator
         previousOperator.style.backgroundColor = "#373c3e";
         previousOperator = mathOperator;
-        console.log("Worked in case of if! previous operator: ", previousOperator);
     }
     // if no previous operator currently, track it
-    else {
+    else
         previousOperator = mathOperator;
-        console.log("Else condition reached. previous operator: ", previousOperator);
-    }
     mathOperator.style.backgroundColor = "#00BB00"
 }
 
