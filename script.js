@@ -206,6 +206,15 @@ function implementButtons() {
         // gonna have to use the number input logic here
         inputNumber(periodBtn, symbols);
     })
+    // backspace key
+    document.addEventListener('keydown', (event) => {
+        const displayText = display.textContent;
+        if (event.key === 'Backspace' && displayText != "0") {
+            display.textContent = displayText.slice(0, -1);
+            if (display.textContent.length == 0)
+                display.textContent = "0";
+        }
+    })
 }
 implementButtons();
 

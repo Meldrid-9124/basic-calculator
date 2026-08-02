@@ -10,6 +10,8 @@ body {
     justify-content: center;
     width: 100vw;
     height: 100vh;
+    color: #ffffff;
+    background-color: #222425;
 }
 
 #window {
@@ -58,4 +60,5 @@ body {
     border-radius: 8px;
     background-color: #373c3e;
     font-size: 2rem;
+    color: #ffffff;
 }
