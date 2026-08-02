@@ -40,13 +40,9 @@ function modulus(num1, num2) {
 
 function power(base, exponent) {
     let result = 1;
-    console.log("base: ", base);
-    console.log("Exponent: ", exponent);
     for (let i = 0; i < exponent; i++) {
-        console.log("Result in loop: ", result);
         result *= base;
     }
-    console.log("Result of power: ", result);
     return result;
 }
 
@@ -142,8 +138,6 @@ function implementButtons() {
     for (const numberButton of numberButtons) {
         numberButton.addEventListener("click", () => {
             inputNumber(numberButton, symbols);
-            console.log("num1: ", num1, "\nnum2: ", num2);
-            console.log("operator: ", operator);
         })
     }
     // event listener for clear 
@@ -173,8 +167,6 @@ function implementButtons() {
             operator = symbols[mathOperator.id];
             // highlight the operator button
             highlightOperator(mathOperator);
-            console.log("num1: ", num1, "\nnum2: ", num2);
-            console.log("operator: ", operator);
         })
     }
     // change sign operator
@@ -197,7 +189,6 @@ function implementButtons() {
         if (operator !== "") {
             globalResult = operate(operator, num1, num2);
             display.textContent = globalResult;
-            console.log("Displayed result: ", globalResult)
         }
     })
     // event listener for the period button
